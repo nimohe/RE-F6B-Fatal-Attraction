@@ -83,6 +83,7 @@
             display: flex;
             align-items: baseline;
             gap: 8px;
+            width: 100%;
         }
         .section-prefix {
             color: #2e7d32;
@@ -99,6 +100,45 @@
         .section-title:hover .section-name.blurred {
             filter: blur(2px);
             opacity: 0.7;
+        }
+
+        /* 字体大小调整控件样式 */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: auto;
+        }
+        .font-controls span {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .font-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+        .font-btn:hover {
+            background: #1b5e20;
+            transform: scale(1.1);
+        }
+        .font-btn:active {
+            transform: scale(0.95);
+        }
+        .font-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
         
         /* 总结框样式 */
@@ -193,6 +233,61 @@
                 }
             });
         });
+
+        // 获取所有字体调整按钮
+        const fontButtons = document.querySelectorAll('.font-btn');
+
+        // 为每个字体调整按钮添加点击事件
+        fontButtons.forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                // 阻止事件冒泡，避免触发 section-title 的点击事件
+                e.stopPropagation();
+
+                // 获取当前 text-box
+                const textBox = this.closest('.text-box');
+                const articleText = textBox.querySelector('.article-text');
+                const summaryContent = textBox.querySelectorAll('.summary-content');
+
+                // 获取当前字体大小
+                const currentSize = parseFloat(window.getComputedStyle(articleText).fontSize);
+                const action = this.getAttribute('data-action');
+
+                // 计算新的字体大小
+                let newSize;
+                if (action === 'increase') {
+                    newSize = currentSize + 2;
+                } else {
+                    newSize = currentSize - 2;
+                }
+
+                // 限制最小和最大字体大小
+                if (newSize >= 10 && newSize <= 40) {
+                    // 应用新的字体大小到 article-text
+                    articleText.style.fontSize = newSize + 'px';
+
+                    // 应用新的字体大小到 summary-content
+                    summaryContent.forEach(function(content) {
+                        content.style.fontSize = newSize + 'px';
+                    });
+
+                    // 更新按钮状态
+                    const decreaseBtn = textBox.querySelector('.font-btn[data-action="decrease"]');
+                    const increaseBtn = textBox.querySelector('.font-btn[data-action="increase"]');
+
+                    if (newSize <= 10) {
+                        decreaseBtn.disabled = true;
+                    } else {
+                        decreaseBtn.disabled = false;
+                    }
+
+                    if (newSize >= 30) {
+                        increaseBtn.disabled = true;
+                    } else {
+                        increaseBtn.disabled = false;
+                    }
+                }
+            });
+        });
     });
 </script>
 
@@ -207,10 +302,16 @@
     <section>
         <div class="content-wrapper">
             <div class="text-box">
-                <h3 class="section-title">
-                    <span class="section-prefix">A.</span>
-                    <span class="section-name blurred">The Trap</span>
-                </h3>
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <h3 class="section-title">
+                        <span class="section-prefix">A.</span>
+                        <span class="section-name blurred">The Trap</span>
+                    </h3>
+                    <div class="font-controls">
+                        <button class="font-btn" data-action="decrease">-</button>
+                        <button class="font-btn" data-action="increase">+</button>
+                    </div>
+                </div>
                 <p class="article-text">
                     A hungry fly speeds through a <span class="highlight">forest</span>. It smells nectar and lands on a green <span class="highlight">leaf</span>. It starts to drink the sweet liquid. Suddenly, the fly's world turns green. The two sides of the leaf close against each other. Long green teeth <span class="highlight">lock</span> together around it. The fly has been caught by a Venus flytrap. There is no escape.
                 </p>
@@ -231,10 +332,16 @@
                 <img src="assets/Scientist studying plants.png" alt="Scientist studying plants">
             </div>
             <div class="text-box">
-                <h3 class="section-title">
-                    <span class="section-prefix">B.</span>
-                    <span class="section-name blurred">An Electrical Plant</span>
-                </h3>
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <h3 class="section-title">
+                        <span class="section-prefix">B.</span>
+                        <span class="section-name blurred">An Electrical Plant</span>
+                    </h3>
+                    <div class="font-controls">
+                        <button class="font-btn" data-action="decrease">-</button>
+                        <button class="font-btn" data-action="increase">+</button>
+                    </div>
+                </div>
                 <p class="article-text">
                     The Venus flytrap is perhaps the most <span class="highlight">famous</span> killer plant. However, scientists have only recently started to understand how it hunts and eats. After years of study, plant scientist Alexander Volkov believes he now knows the Venus flytrap's secret. "This," says Volkov, "is an <span class="highlight">electrical</span> plant."
                 </p>
@@ -249,10 +356,16 @@
     <section>
         <div class="content-wrapper">
             <div class="text-box">
-                <h3 class="section-title">
-                    <span class="section-prefix">C.</span>
-                    <span class="section-name blurred">The Trigger</span>
-                </h3>
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <h3 class="section-title">
+                        <span class="section-prefix">C.</span>
+                        <span class="section-name blurred">The Trigger</span>
+                    </h3>
+                    <div class="font-controls">
+                        <button class="font-btn" data-action="decrease">-</button>
+                        <button class="font-btn" data-action="increase">+</button>
+                    </div>
+                </div>
                 <p class="article-text">
                     There are three small hairs <span class="highlight">along</span> each of the Venus flytrap's two leaves. When an insect touches a hair, it creates an electrical signal in the leaf. The insect can continue feeding—for now. But if it touches another hair <span class="highlight">within</span> 20 seconds, the trap snaps shut. This system allows the plant to tell the <span class="highlight">difference</span> between a drop of water, for example, and a moving creature.
                 </p>
@@ -273,10 +386,16 @@
                 <img src="assets/Closed trap digesting.png" alt="Closed trap digesting">
             </div>
             <div class="text-box">
-                <h3 class="section-title">
-                    <span class="section-prefix">D.</span>
-                    <span class="section-name blurred">Digestion</span>
-                </h3>
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <h3 class="section-title">
+                        <span class="section-prefix">D.</span>
+                        <span class="section-name blurred">Digestion</span>
+                    </h3>
+                    <div class="font-controls">
+                        <button class="font-btn" data-action="decrease">-</button>
+                        <button class="font-btn" data-action="increase">+</button>
+                    </div>
+                </div>
                 <p class="article-text">
                     Once trapped, an insect has little chance of survival. Instead of nectar, the Venus flytrap now releases a different liquid—one that slowly eats away at the insect. Ten days later, almost nothing is left. The plant's leaves open again, and the Venus flytrap is ready for its next meal.
                 </p>
