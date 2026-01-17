@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>捕蝇草的致命诱惑 - 初中趣味科普课件</title>
+    <style>
+        /* 全局样式重置与基础配置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Arial Rounded MT Bold", sans-serif;
+        }
+
+        :root {
+            /* 主题配色：贴合捕蝇草，清新护眼 */
+            --main-green: #2e7d32; /* 叶片深绿 */
+            --light-green: #81c784; /* 叶片浅绿 */
+            --accent-red: #e57373; /* 捕蝇草内侧红色 */
+            --bg-color: #f9fbf9; /* 页面背景色 */
+            --text-color: #212121; /* 正文文字色 */
+            --light-text: #757575; /* 辅助文字色 */
+            --card-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* 卡片阴影 */
+            --transition: all 0.5s ease; /* 统一过渡动画 */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 顶部导航栏 */
+        .nav-bar {
+            background-color: var(--main-green);
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* 课件容器 */
+        .courseware-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* 封面模块 */
+        .cover-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                        url("https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80");
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 4rem;
+        }
+
+        .cover-title {
+            font-size: 2.5rem;
+            color: var(--main-green);
+            margin-bottom: 1rem;
+        }
+
+        .cover-subtitle {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+        }
+
+        .cover-btn {
+            padding: 0.8rem 2.5rem;
+            background-color: var(--main-green);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cover-btn:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-3px);
+        }
+
+        /* 通用模块样式 */
+        .section {
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--main-green);
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 捕猎流程模块 - 分步交互 */
+        .process-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: var(--main-green);
+            color: white;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            color: var(--main-green);
+            margin-bottom: 1rem;
+        }
+
+        .step-content {
+            color: var(--light-text);
+            font-size: 1rem;
+        }
+
+        .step-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        /* 文章精读模块 - 展开/收起交互 */
+        .article-paragraph {
+            margin-bottom: 3rem;
+        }
+
+        .para-title {
+            font-size: 1.4rem;
+            color: var(--main-green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .para-toggle {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: var(--light-green);
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .para-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+            padding-left: 1rem;
+            border-left: 2px solid var(--light-green);
+        }
+
+        .para-content.expanded {
+            max-height: 1000px;
+            padding-bottom: 1rem;
+        }
+
+        .para-text {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .key-word {
+            color: var(--accent-red);
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .key-word:hover::after {
+            content: attr(data-meaning);
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background-color: var(--main-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            z-index: 99;
+        }
+
+        .para-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        /* 捕猎模拟小游戏模块 */
+        .game-section {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .game-title {
+            font-size: 1.6rem;
+            color: var(--main-green);
+            margin-bottom: 2rem;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            background-color: #f1f8e9;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .flytrap {
+            position: absolute;
+            width: 200px;
+            height: 180px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: var(--transition);
+        }
+
+        .flytrap-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .hair {
+            position: absolute;
+            width: 8px;
+            height: 30px;
+            background-color: rgba(46, 125, 50, 0.5);
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .hair1 {
+            top: 30%;
+            left: 25%;
+        }
+
+        .hair2 {
+            top: 35%;
+            left: 70%;
+        }
+
+        .insect {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .insect-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .game-tips {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+
+        .game-feedback {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .reset-game-btn {
+            margin-top: 2rem;
+            padding: 0.7rem 2rem;
+            background-color: var(--main-green);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .reset-game-btn:hover {
+            background-color: var(--accent-red);
+        }
+
+        /* 总结模块 */
+        .summary-list {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .summary-item {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .summary-item::before {
+            content: "✅";
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* 底部版权 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="nav-bar">
+        <div class="nav-title">捕蝇草的致命诱惑 - 初中趣味科普课件</div>
+    </div>
+
+    <!-- 课件主体容器 -->
+    <div class="courseware-container">
+        <!-- 1. 封面模块 -->
+        <div class="cover-section" id="cover">
+            <h1 class="cover-title">Fatal Attraction</h1>
+            <h2 class="cover-subtitle">—— 探索捕蝇草的神奇捕猎之旅</h2>
+            <button class="cover-btn" onclick="startCourseware()">开始探索 →</button>
+        </div>
+
+        <!-- 2. 捕猎流程模块 -->
+        <div class="section" id="processSection">
+            <h2 class="section-title">捕蝇草的四步捕猎法</h2>
+            <div class="process-container">
+                <!-- 步骤1：引诱 -->
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">分泌花蜜 · 引诱猎物</h3>
+                    <p class="step-content">捕蝇草会分泌香甜的花蜜，散发出诱人的气味，吸引苍蝇、蚊子等小昆虫前来觅食。</p>
+                    <img src="https://images.unsplash.com/photo-1614251056798-0a63eda2bb5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="捕蝇草分泌花蜜" class="step-img">
+                </div>
+
+                <!-- 步骤2：触发 -->
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">触碰绒毛 · 产生信号</h3>
+                    <p class="step-content">昆虫吸食花蜜时，会触碰叶片内侧的细小绒毛，触碰一次会产生电信号，但不会闭合。</p>
+                    <img src="https://images.unsplash.com/photo-1592838064575-51729049d204?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="捕蝇草的绒毛" class="step-img">
+                </div>
+
+                <!-- 步骤3：闭合 -->
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">两次触碰 · 叶片闭合</h3>
+                    <p class="step-content">20秒内昆虫再次触碰绒毛，叶片会迅速闭合，边缘的长齿锁住猎物，让它无法逃脱。</p>
+                    <img src="https://images.unsplash.com/photo-1577563909036-2c2b1477ad50?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="捕蝇草闭合叶片" class="step-img">
+                </div>
+
+                <!-- 步骤4：消化 -->
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">分泌汁液 · 消化猎物</h3>
+                    <p class="step-content">叶片闭合后分泌消化液，大约10天完成消化，吸收营养后，叶片重新打开等待下一个猎物。</p>
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315306e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="捕蝇草消化猎物" class="step-img">
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 文章精读模块 -->
+        <div class="section" id="articleSection">
+            <h2 class="section-title">文章精读 · 逐段拆解</h2>
+
+            <!-- 段落A -->
+            <div class="article-paragraph">
+                <div class="para-title" onclick="togglePara(this)">
+                    段落A：捕猎的全过程
+                    <span class="para-toggle">+</span>
+                </div>
+                <div class="para-content">
+                    <img src="https://images.unsplash.com/photo-1584467796467-4f6c10f1a4e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="捕蝇草捕猎" class="para-img">
+                    <p class="para-text">
+                        A fly smells <span class="key-word" data-meaning="n. 花蜜">nectar</span> and lands on a green leaf. It starts to drink the sweet liquid. Suddenly, the fly's world turns green. The two sides of the leaf close against each other. Long green teeth lock together around it. This is not a nightmare. This is the work of the Venus flytrap, a <span class="key-word" data-meaning="adj. 食虫的">carnivorous</span> plant.
+                    </p>
+                    <p class="para-text">
+                        The Venus flytrap has a special way to catch its food. When an insect touches the tiny hairs on its leaves twice <span class="key-word" data-meaning="prep. 在……之内">within</span> 20 seconds, the leaf <span class="key-word" data-meaning="短语 猛地关闭">snaps shut</span>. The insect can't get out. Then the plant produces a different liquid to digest the insect. It takes about 10 days for the plant to finish digesting. After that, the leaf opens again, waiting for the next meal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 段落B-C：科学新发现 -->
+            <div class="article-paragraph">
+                <div class="para-title" onclick="togglePara(this)">
+                    段落B-C：科学家的新发现
+                    <span class="para-toggle">+</span>
+                </div>
+                <div class="para-content">
+                    <img src="https://images.unsplash.com/photo-1633869715550-1497f811c83f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="科学家研究捕蝇草" class="para-img">
+                    <p class="para-text">
+                        For a long time, scientists knew the Venus flytrap could move, but they didn't really understand how it worked. Recently, a plant scientist named Alexander Volkov found out the secret.
+                    </p>
+                    <p class="para-text">
+                        When an insect touches the hairs on the leaf, it creates an <span class="key-word" data-meaning="adj. 电的">electrical</span> signal. The first touch makes a small signal. The second touch makes a bigger signal. This signal tells the leaf to close. This allows the plant to tell the difference between a drop of water and a moving creature. It doesn't want to waste energy closing for nothing!
+                    </p>
+                </div>
+            </div>
+
+            <!-- 段落D：捕蝇草的本质 -->
+            <div class="article-paragraph">
+                <div class="para-title" onclick="togglePara(this)">
+                    段落D：为什么捕蝇草要吃虫？
+                    <span class="para-toggle">+</span>
+                </div>
+                <div class="para-content">
+                    <img src="https://images.unsplash.com/photo-1599412417209-225600996471?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="捕蝇草生长环境" class="para-img">
+                    <p class="para-text">
+                        The Venus flytrap is <span class="key-word" data-meaning="adj. 著名的">famous</span> around the world. It grows in only a small area in North America. The soil there is poor and lacks important nutrients like nitrogen. So the plant has to catch insects to get the nutrients it needs to grow. It's a clever way to survive in a difficult environment.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 捕猎模拟小游戏模块 -->
+        <div class="section" id="gameSection">
+            <h2 class="section-title">趣味小游戏 · 模拟捕蝇草捕猎</h2>
+            <div class="game-section">
+                <h3 class="game-title">尝试让捕蝇草闭合吧！（提示：需要两次触碰绒毛哦）</h3>
+                <div class="game-container">
+                    <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="张开的捕蝇草" class="flytrap-img" id="flytrapImg">
+                    <div class="hair hair1" onclick="touchHair(1)"></div>
+                    <div class="hair hair2" onclick="touchHair(2)"></div>
+                    <div class="insect" onclick="moveInsect()">
+                        <img src="https://images.unsplash.com/photo-1518644730709-0835105d9daa?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="苍蝇" class="insect-img">
+                    </div>
+                </div>
+                <p class="game-tips" id="gameTips">点击昆虫先让它靠近捕蝇草，再点击叶片上的绒毛～</p>
+                <p class="game-feedback" id="gameFeedback"></p>
+                <button class="reset-game-btn" onclick="resetGame()">重新开始游戏</button>
+            </div>
+        </div>
+
+        <!-- 5. 总结模块 -->
+        <div class="section" id="summarySection">
+            <h2 class="section-title">知识点总结 · 巩固记忆</h2>
+            <div class="card">
+                <ul class="summary-list">
+                    <li class="summary-item">捕蝇草是一种食虫植物，依靠捕猎昆虫获取生长所需的营养。</li>
+                    <li class="summary-item">捕蝇草捕猎分四步：分泌花蜜→触碰绒毛→叶片闭合→消化猎物。</li>
+                    <li class="summary-item">只有20秒内两次触碰绒毛，捕蝇草才会闭合，这是为了节约能量。</li>
+                    <li class="summary-item">捕蝇草通过电信号判断猎物，能区分无生命物体和活的昆虫。</li>
+                    <li class="summary-item">捕蝇草生长在营养贫瘠的土壤中，吃虫是它适应环境的聪明方式。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer">
+        捕蝇草趣味科普课件 | 适合初中生学习使用
+    </div>
+
+    <script>
+        // 全局变量：记录触碰绒毛次数、游戏状态
+        let touchCount = 0;
+        let insectMoved = false;
+
+        // 1. 开始课件：隐藏封面，显示后续模块（带滚动动画）
+        function startCourseware() {
+            document.getElementById("cover").style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById("cover").style.display = "none";
+                // 逐个显示模块
+                const sections = document.querySelectorAll(".section");
+                sections.forEach((section, index) => {
+                    setTimeout(() => {
+                        section.classList.add("visible");
+                    }, index * 300);
+                });
+            }, 500);
+        }
+
+        // 2. 文章段落：展开/收起交互
+        function togglePara(paraTitle) {
+            const paraContent = paraTitle.nextElementSibling;
+            const toggleBtn = paraTitle.querySelector(".para-toggle");
+            
+            paraContent.classList.toggle("expanded");
+            if (paraContent.classList.contains("expanded")) {
+                toggleBtn.textContent = "-";
+            } else {
+                toggleBtn.textContent = "+";
+            }
+        }
+
+        // 3. 小游戏：触碰绒毛
+        function touchHair(hairNum) {
+            if (!insectMoved) {
+                document.getElementById("gameFeedback").textContent = "先让昆虫靠近捕蝇草哦！";
+                return;
+            }
+
+            touchCount++;
+            const feedback = document.getElementById("gameFeedback");
+            const tips = document.getElementById("gameTips");
+
+            if (touchCount === 1) {
+                feedback.textContent = "第一次触碰绒毛啦！再触碰一次就能闭合～";
+                feedback.style.color = var(--main-green);
+                tips.textContent = "快点击另一根绒毛，完成第二次触碰！";
+            } else if (touchCount === 2) {
+                feedback.textContent = "太棒啦！捕蝇草成功闭合，猎物跑不掉咯～";
+                feedback.style.color = var(--accent-red);
+                // 更换捕蝇草闭合图片
+                document.getElementById("flytrapImg").src = "https://images.unsplash.com/photo-1577563909036-2c2b1477ad50?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80";
+                tips.textContent = "捕蝇草会用10天左右的时间消化这只昆虫～";
+                // 禁用绒毛点击
+                document.querySelectorAll(".hair").forEach(hair => {
+                    hair.style.pointerEvents = "none";
+                });
+            }
+        }
+
+        // 4. 小游戏：移动昆虫
+        function moveInsect() {
+            const insect = document.querySelector(".insect");
+            insect.style.left = "40%";
+            insect.style.top = "30%";
+            insectMoved = true;
+            document.getElementById("gameTips").textContent = "昆虫已经靠近啦，现在可以点击叶片上的绒毛～";
+            document.getElementById("gameFeedback").textContent = "";
+        }
+
+        // 5. 小游戏：重新开始
+        function resetGame() {
+            touchCount = 0;
+            insectMoved = false;
+            // 重置昆虫位置
+            document.querySelector(".insect").style.left = "10%";
+            document.querySelector(".insect").style.top = "20%";
+            // 重置捕蝇草图片
+            document.getElementById("flytrapImg").src = "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80";
+            // 重置提示和反馈
+            document.getElementById("gameTips").textContent = "点击昆虫先让它靠近捕蝇草，再点击叶片上的绒毛～";
+            document.getElementById("gameFeedback").textContent = "";
+            // 启用绒毛点击
+            document.querySelectorAll(".hair").forEach(hair => {
+                hair.style.pointerEvents = "auto";
+            });
+        }
+
+        // 6. 滚动监听：实现模块懒加载（优化体验）
+        window.addEventListener("scroll", () => {
+            const sections = document.querySelectorAll(".section");
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (sectionTop < windowHeight * 0.8 && !section.classList.contains("visible")) {
+                    section.classList.add("visible");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
