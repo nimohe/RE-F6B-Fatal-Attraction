@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Calibri,Tahoma, Geneva, Verdana, sans-serif;
             scroll-behavior: smooth;
         }
 
@@ -53,7 +53,7 @@
         /* 内容页布局 */
         .content-wrapper {
             display: flex;
-            max-width: 1200px;
+            max-width: 1450px;
             width: 100%;
             gap: 40px;
             align-items: center;
@@ -68,14 +68,38 @@
         
         .image-box img {
             width: 100%;
-            height: 400px;
-            object-fit: cover;
+            height: auto;
             border-radius: 10px;
         }
 
         /* 文本样式 */
         h3 { color: #2e7d32; font-size: 2rem; margin-top: 0; }
         p.article-text { font-size: 1.2rem; line-height: 1.8; color: #444; }
+
+        /* 章节标题样式 */
+        .section-title {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .section-prefix {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .section-name {
+            color: #2e7d32;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        .section-name.blurred {
+            filter: blur(8px);
+            opacity: 0.3;
+        }
+        .section-title:hover .section-name.blurred {
+            filter: blur(2px);
+            opacity: 0.7;
+        }
         
         /* 总结框样式 */
         .summary-box {
@@ -122,7 +146,6 @@
         @media (max-width: 768px) {
             .content-wrapper { flex-direction: column; padding: 20px; }
             .cover h1 { font-size: 3rem; }
-            .image-box img { height: 200px; }
             p.article-text { font-size: 1rem; }
         }
     </style>
@@ -152,6 +175,24 @@
                 }
             });
         });
+
+        // 获取所有 section-title 元素
+        const sectionTitles = document.querySelectorAll('.section-title');
+
+        // 为每个 section-title 添加点击事件
+        sectionTitles.forEach(function(title) {
+            title.addEventListener('click', function() {
+                // 获取 section-name 元素
+                const sectionName = this.querySelector('.section-name');
+
+                // 切换模糊/清晰状态
+                if (sectionName.classList.contains('blurred')) {
+                    sectionName.classList.remove('blurred');
+                } else {
+                    sectionName.classList.add('blurred');
+                }
+            });
+        });
     });
 </script>
 
@@ -166,7 +207,10 @@
     <section>
         <div class="content-wrapper">
             <div class="text-box">
-                <h3>A. The Trap</h3>
+                <h3 class="section-title">
+                    <span class="section-prefix">A.</span>
+                    <span class="section-name blurred">The Trap</span>
+                </h3>
                 <p class="article-text">
                     A hungry fly speeds through a <span class="highlight">forest</span>. It smells nectar and lands on a green <span class="highlight">leaf</span>. It starts to drink the sweet liquid. Suddenly, the fly's world turns green. The two sides of the leaf close against each other. Long green teeth <span class="highlight">lock</span> together around it. The fly has been caught by a Venus flytrap. There is no escape.
                 </p>
@@ -187,7 +231,10 @@
                 <img src="assets/Scientist studying plants.png" alt="Scientist studying plants">
             </div>
             <div class="text-box">
-                <h3>B. An Electrical Plant</h3>
+                <h3 class="section-title">
+                    <span class="section-prefix">B.</span>
+                    <span class="section-name blurred">An Electrical Plant</span>
+                </h3>
                 <p class="article-text">
                     The Venus flytrap is perhaps the most <span class="highlight">famous</span> killer plant. However, scientists have only recently started to understand how it hunts and eats. After years of study, plant scientist Alexander Volkov believes he now knows the Venus flytrap's secret. "This," says Volkov, "is an <span class="highlight">electrical</span> plant."
                 </p>
@@ -202,7 +249,10 @@
     <section>
         <div class="content-wrapper">
             <div class="text-box">
-                <h3>C. The Trigger</h3>
+                <h3 class="section-title">
+                    <span class="section-prefix">C.</span>
+                    <span class="section-name blurred">The Trigger</span>
+                </h3>
                 <p class="article-text">
                     There are three small hairs <span class="highlight">along</span> each of the Venus flytrap's two leaves. When an insect touches a hair, it creates an electrical signal in the leaf. The insect can continue feeding—for now. But if it touches another hair <span class="highlight">within</span> 20 seconds, the trap snaps shut. This system allows the plant to tell the <span class="highlight">difference</span> between a drop of water, for example, and a moving creature.
                 </p>
@@ -223,7 +273,10 @@
                 <img src="assets/Closed trap digesting.png" alt="Closed trap digesting">
             </div>
             <div class="text-box">
-                <h3>D. Digestion</h3>
+                <h3 class="section-title">
+                    <span class="section-prefix">D.</span>
+                    <span class="section-name blurred">Digestion</span>
+                </h3>
                 <p class="article-text">
                     Once trapped, an insect has little chance of survival. Instead of nectar, the Venus flytrap now releases a different liquid—one that slowly eats away at the insect. Ten days later, almost nothing is left. The plant's leaves open again, and the Venus flytrap is ready for its next meal.
                 </p>
