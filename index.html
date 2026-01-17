@@ -586,11 +586,13 @@
 
             if (touchCount === 1) {
                 feedback.textContent = "第一次触碰绒毛啦！再触碰一次就能闭合～";
-                feedback.style.color = var(--main-green);
+                // 修复点1：给 CSS 变量加上引号
+                feedback.style.color = "var(--main-green)"; 
                 tips.textContent = "快点击另一根绒毛，完成第二次触碰！";
             } else if (touchCount === 2) {
                 feedback.textContent = "太棒啦！捕蝇草成功闭合，猎物跑不掉咯～";
-                feedback.style.color = var(--accent-red);
+                // 修复点2：给 CSS 变量加上引号
+                feedback.style.color = "var(--accent-red)";
                 // 更换捕蝇草闭合图片
                 document.getElementById("flytrapImg").src = "https://images.unsplash.com/photo-1577563909036-2c2b1477ad50?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80";
                 tips.textContent = "捕蝇草会用10天左右的时间消化这只昆虫～";
